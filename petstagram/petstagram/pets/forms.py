@@ -11,7 +11,8 @@ from petstagram.pets.models import Pet
 class PetForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Pet
-        fields = '__all__'
+        exclude = ('user',)
+        # fields = '__all__'
         widgets = {
             'name': forms.TextInput(
                 attrs={

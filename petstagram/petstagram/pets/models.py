@@ -2,14 +2,17 @@ import os
 from os.path import join
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import models
-
 
 # Custom validator - more complex variant
 # def is_positive(value):
 #     if value <= 0:
 #         raise ValidationError
+
+
+UserModel = get_user_model()
 
 
 class Pet(models.Model):
@@ -34,6 +37,11 @@ class Pet(models.Model):
     # image_url = models.URLField()
     image = models.ImageField(
         upload_to='pets',
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
     )
 
     # age = models.IntegerField(
@@ -62,6 +70,10 @@ class Pet(models.Model):
 
 class Like(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
     # Migrations needed
     # user_id = models.CharField(
     #     null=True,

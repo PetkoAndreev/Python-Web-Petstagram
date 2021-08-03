@@ -13,13 +13,13 @@ from petstagram.pets.models import Pet
 
 
 class CommentForm(forms.ModelForm):
-    pet_id = forms.IntegerField(
+    pet_pk = forms.IntegerField(
         widget=forms.HiddenInput()
     )
 
     class Meta:
         model = Comment
-        fields = ('text', 'pet_id',)
+        fields = ('text', 'pet_pk',)
 
     def save(self, commit=True):
         pet_pk = self.cleaned_data['pet_pk']

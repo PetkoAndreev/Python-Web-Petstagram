@@ -1,7 +1,8 @@
 from django.urls import path
 
-from petstagram.pets.views import list_pets, pet_details, like_pet, create_pet, edit_pet, delete_pet, comment_pet, \
-    ListPetsView
+from petstagram.pets.views import list_pets, pet_details, like_pet, create_pet, edit_pet, delete_pet, comment_pet
+
+# ListPetsView
 
 urlpatterns = [
     path('', list_pets, name='list_pets'),
