@@ -1,4 +1,8 @@
 # from django.core.exceptions import ValidationError
+import os
+from os.path import join
+
+from django.conf import settings
 from django.db import models
 
 
@@ -37,11 +41,29 @@ class Pet(models.Model):
     )
     age = models.PositiveIntegerField()
     description = models.TextField()
-    image_url = models.URLField()
+    image = models.ImageField(
+        upload_to='pets',
+    )
+
+    # image_url = models.URLField()
+
+    # # Deleting image pet when it's changed with the new one
+    # def save(self, force_insert=False, force_update=False, using=None,
+    #          update_fields=None):
+    #     db_pet = Pet.objects.get(pk=self.id)
+    #     # Don't do it on this way, because it'll works only in the OS on which is developed
+    #     # image_path = f'{settings.MEDIA_ROOT} / {db_pet.image.url[len("/media/"):]}'
+    #     # Not a recommended variant, but it works
+    #     # image_path = join(settings.MEDIA_ROOT, db_pet.image.url[len('/media/'):])
+    #     image_path = join(settings.MEDIA_ROOT, str(db_pet.image))
+    #     os.remove(image_path)
+    #     return super().save(force_insert=force_insert, force_update=force_update, using=using,
+    #                         update_fields=update_fields)
+
 
     # str method visualize data in admin panel as row, not as columns
-    # def __str__(self):
-    #     return f'{self.name}, {self.age}, {self.type}'
+    def __str__(self):
+        return f'{self.name}, {self.age}, {self.type}'
 
 
 class Like(models.Model):
