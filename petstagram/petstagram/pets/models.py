@@ -1,9 +1,8 @@
 # from django.core.exceptions import ValidationError
-import os
-from os.path import join
-
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
+
+UserModel = get_user_model()
 
 
 # Custom validator - hard way
@@ -45,6 +44,11 @@ class Pet(models.Model):
         upload_to='pets',
     )
 
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
+    )
+
     # image_url = models.URLField()
 
     # # Deleting image pet when it's changed with the new one
@@ -60,7 +64,6 @@ class Pet(models.Model):
     #     return super().save(force_insert=force_insert, force_update=force_update, using=using,
     #                         update_fields=update_fields)
 
-
     # str method visualize data in admin panel as row, not as columns
     def __str__(self):
         return f'{self.name}, {self.age}, {self.type}'
@@ -70,3 +73,7 @@ class Like(models.Model):
     # When we have FK an object is created in main class - Model_Name_set
     # in our case - like_set is the name of the object and in that way we get the likes
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
